@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>今天是星期四吗？</title>
+    <!-- 添加 favicon -->
+    <link rel="icon" href="https://github.com/1iuzh/myico/raw/refs/heads/main/%E5%93%88%E5%A3%AB%E5%A5%87.svg" type="image/svg+xml">
+    <!-- 引入 Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        /* 设置全局页面样式 */
+        body {
+            background-color: #f3f5fa; /* 页面背景颜色为浅蓝色 */
+            font-family: 'Microsoft YaHei', sans-serif; /* 设置全局字体 */
+            color: #333; /* 设置全局文字颜色为深灰色 */
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* 设置一级标题（h1）的样式 */
+        h1 {
+            text-align: center; /* 文字居中 */
+            color: #333; /* 文字颜色为深灰色 */
+            margin: 20px 0; /* 上下外边距为20px，左右为0 */
+            font-size: 38px; /* 字体大小为父元素字体大小的2.5倍 */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* 添加文字阴影效果 */
+            font-weight: bold; /* 字体加粗 */
+        }
+
+        /* 设置网格容器的样式 */
+        .grid-container {
+            max-width: 1600px; /* 容器最大宽度为1600px */
+            margin: 0 auto; /* 容器水平居中 */
+            padding: 20px; /* 内边距为20px */
+            display: flex; /* 使用flex布局 */
+            flex-wrap: wrap; /* 允许换行 */
+            gap: 20px; /* 设置网格项之间的间距 */
+        }
+
+        /* 设置网格项的样式 */
+        .grid-item {
+            background-color: rgba(255, 255, 255, 0.9); /* 背景为半透明白色 */
+            border-radius: 30px; /* 圆角半径为30px */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+            padding: 20px; /* 内边距为20px */
+            transition: transform 0.2s, box-shadow 0.2s; /* 添加过渡动画效果 */
+            flex: 1 1 calc(33.333% - 40px); /* 设置每个网格项的宽度为三分之一，减去间距 */
+            display: flex; /* 使用flex布局 */
+            flex-direction: column; /* 垂直排列内容 */
+            align-items: stretch; /* 使同一行内的网格项高度一致 */
+        }
+
+        /* 设置网格项在悬停时的样式 */
+        .grid-item:hover {
+            transform: translateY(-5px); /* 向上移动5px */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* 阴影效果增强 */
+        }
+
+        /* 设置网格项内二级标题（h2）的样式 */
+        .grid-item h2 {
+            color: #555; /* 文字颜色为深灰色 */
+            margin: 0 0 10px; /* 上下外边距为0，下边距为10px */
+            font-size: 26px; /* 字体大小为30px */
+            text-align: center; /* 标题文本居中 */
+            padding-bottom: 8px; /* 添加下边距 */
+            border-bottom: 2px solid #d7d6d6; /* 在标题下添加一条横线 */
+            font-weight: bold; /* 字体加粗 */
+        }
+
+        /* 设置链接块容器的样式 */
+        .link-container {
+            display: flex; /* 使用flex布局 */
+            flex-wrap: wrap; /* 允许换行 */
+            gap: 10px; /* 设置链接块之间的间距 */
+        }
+
+        /* 设置链接块的样式 */
+        .link-block {
+            background-color: rgb(249, 250, 251); /* 背景为半透明白色 */
+            border-radius: 10px; /* 圆角半径为10px */
+            padding: 10px; /* 内边距为10px */
+            text-align: left; /* 文字左对齐 */
+            transition: background-color 0.2s, transform 0.2s, color 0.2s; /* 添加过渡动画效果 */
+            border: 1px solid #ddd; /* 添加1px的浅灰色边框 */
+            position: relative; /* 设置为相对定位，方便图片定位 */
+            flex: 1 1 calc(33.333% - 20px); /* 设置每个链接块的宽度为三分之一，减去间距 */
+            box-sizing: border-box; /* 确保内边距和边框包含在宽度内 */
+            min-width: calc(33.333% - 20px); /* 确保最小宽度为三分之一，减去间距 */
+        }
+
+        /* 设置链接块在悬停时的样式 */
+        .link-block:hover {
+            background-color: #0078d7; /* 背景颜色变为文字颜色 */
+            transform: translateY(-3px); /* 向上移动3px */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+        }
+
+        /* 设置链接块内链接（a）的样式 */
+        .link-block a {
+            text-decoration: none; /* 去掉下划线 */
+            color: #0078d7; /* 文字颜色为蓝色 */
+            font-size: 16px; /* 字体大小为16px */
+            display: block; /* 设置为块级元素 */
+            position: relative; /* 设置为相对定位，方便图片定位 */
+            padding-left: 32px; /* 左侧留出空间给图片 */
+            transition: color 0.2s; /* 添加文字颜色过渡效果 */
+        }
+
+        /* 设置链接块内图片的样式 */
+        .link-block img {
+            width: 16px; /* 图片宽度为16px */
+            height: 16px; /* 图片高度为16px */
+            position: absolute; /* 图片绝对定位 */
+            left: 8px; /* 图片距离左侧8px */
+            top: 50%; /* 图片垂直居中 */
+            transform: translateY(-50%); /* 图片垂直居中 */
+        }
+
+        /* 设置链接块在悬停时文字颜色变为白色 */
+        .link-block:hover a {
+            color: #fff; /* 文字颜色变为白色 */
+        }
+    </style>
+</head>
+<body>
+
+<h1 class="mt-4">今天是星期四吗？</h1>
+
+<div class="grid-container">
+    <!-- 第一行 -->
+    <div class="grid-item">
+        <h2>AI应用</h2>
+        <div class="link-container">
+            <div class="link-block"><a href="https://www.deepseek.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=www.deepseek.com" alt="favicon">Deepseek</a></div>
+            <div class="link-block"><a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=chatgpt.com" alt="favicon">ChatGPT</a></div>
+            <div class="link-block"><a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=gemini.google.com" alt="favicon">Gemini</a></div>
+            <div class="link-block"><a href="https://tongyi.aliyun.com/" target="_blank" rel="noopener noreferrer"><img src="https://img.alicdn.com/imgextra/i1/O1CN01AKUdEM1qP6BQVaYhT_!!6000000005487-2-tps-512-512.png" alt="favicon">通义千问</a></div>
+            <div class="link-block"><a href="https://kimi.moonshot.cn/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=kimi.moonshot.cn" alt="favicon">Kimi</a></div>
+            <div class="link-block"><a href="https://www.anthropic.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=anthropic.com" alt="favicon">Claude</a></div>
+            <div class="link-block"><a href="https://www.doubao.com/chat/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=www.doubao.com" alt="favicon">豆包</a></div>
+            <div class="link-block"><a href="https://chatglm.cn/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=chatglm.cn" alt="favicon">智谱清言</a></div>
+            <div class="link-block"><a href="https://yiyan.baidu.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=yiyan.baidu.com" alt="favicon">文心一言</a></div>
+        </div>
+    </div>
+    <div class="grid-item">
+        <h2>购物类</h2>
+        <div class="link-container">
+            <div class="link-block"><a href="https://www.smzdm.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=www.smzdm.com" alt="favicon">什么值得买</a></div>
+            <div class="link-block"><a href="https://www.jd.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=www.jd.com" alt="favicon">京东</a></div>
+            <div class="link-block"><a href="https://www.taobao.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=www.taobao.com" alt="favicon">淘宝</a></div>
+            <div class="link-block"><a href="https://www.tmall.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=www.tmall.com" alt="favicon">天猫</a></div>
+            <div class="link-block"><a href="https://chaoshi.tmall.com/" target="_blank" rel="noopener noreferrer"><img src="https://img.alicdn.com/tfs/TB1XlF3RpXXXXc6XXXXXXXXXXXX-16-16.png" alt="favicon">天猫超市</a></div>
+            <div class="link-block"><a href="https://www.mi.com/shop" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=www.mi.com" alt="favicon">小米商城</a></div>
+            <div class="link-block"><a href="https://www.uniqlo.cn/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=www.uniqlo.cn" alt="favicon">优衣库</a></div>
+            <div class="link-block"><a href="https://www.muji.com.cn/cn/store/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=www.muji.com.cn" alt="favicon">无印良品</a></div>
+            <div class="link-block"><a href="https://www.decathlon.com.cn/" target="_blank" rel="noopener noreferrer"><img src="https://www.decathlon.com.cn/favicons.ico" alt="favicon">迪卡侬</a></div>
+            <div class="link-block"><a href="https://www.apple.com.cn/store" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=www.apple.com.cn" alt="favicon">苹果商店</a></div>
+            <div class="link-block"><a href="https://store.dji.com/cn" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=store.dji.com" alt="favicon">大疆商城</a></div>
+            <div class="link-block"><a href="https://www.amazon.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=www.amazon.com" alt="favicon">亚马逊</a></div>
+            <div class="link-block"><a href="https://www.ebay.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=www.ebay.com" alt="favicon">eBay</a></div>
+            <div class="link-block"><a href="https://www.newegg.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=www.newegg.com" alt="favicon">新蛋</a></div>
+            <div class="link-block"><a href="https://www.bestbuy.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=www.bestbuy.com" alt="favicon">百思买</a></div>
+        </div>
+    </div>
+    <div class="grid-item">
+        <h2>常用</h2>
+        <div class="link-container">
+            <div class="link-block"><a href="https://www.douyin.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=www.douyin.com" alt="favicon">抖音</a></div>
+            <div class="link-block"><a href="https://www.kuaishou.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=www.kuaishou.com" alt="favicon">快手</a></div>
+            <div class="link-block"><a href="https://www.xiaohongshu.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.xiaohongshu.com/favicon.ico" alt="favicon">小红书</a></div>
+            <div class="link-block"><a href="https://www.douban.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=www.douban.com" alt="favicon">豆瓣</a></div>
+            <div class="link-block"><a href="https://www.zhihu.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=www.zhihu.com" alt="favicon">知乎</a></div>
+            <div class="link-block"><a href="https://www.hupu.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=www.hupu.com" alt="favicon">虎扑</a></div>
+            <div class="link-block"><a href="https://tieba.baidu.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=tieba.baidu.com" alt="favicon">贴吧</a></div>
+            <div class="link-block"><a href="https://www.chiphell.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.chiphell.com/favicon.ico" alt="favicon">chiphell</a></div>
+            <div class="link-block"><a href="https://www.v2ex.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=www.v2ex.com" alt="favicon">V2EX</a></div>
+            <div class="link-block"><a href="https://web.okjike.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=web.okjike.com" alt="favicon">即刻</a></div>
+            <div class="link-block"><a href="https://www.bilibili.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=bilibili.com" alt="favicon">哔哩哔哩</a></div>
+        </div>
+    </div>
+
+    <!-- 第二行 -->
+    <div class="grid-item">
+        <h2>综合</h2>
+        <div class="link-container">
+            <div class="link-block"><a href="https://kuaibao.me/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=kuaibao.me" alt="favicon">快豹速览</a></div>
+            <div class="link-block"><a href="https://www.hsmy.fun/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=www.hsmy.fun" alt="favicon">浑水阅读</a></div>
+            <div class="link-block"><a href="https://yinghezhinan.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=yinghezhinan.com" alt="favicon">硬核指南</a></div>
+            <div class="link-block"><a href="https://gaze.run/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=gaze.run" alt="favicon">注视影视</a></div>
+            <div class="link-block"><a href="https://iui.su/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=iui.su" alt="favicon">不死鸟分享</a></div>
+            <div class="link-block"><a href="http://ilxdh.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=ilxdh.com" alt="favicon">龙轩导航</a></div>
+        </div>
+    </div>
+    <div class="grid-item">
+        <h2>邮箱登录</h2>
+        <div class="link-container">
+            <div class="link-block"><a href="https://mail.qq.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=mail.qq.com" alt="favicon">QQ邮箱</a></div>
+            <div class="link-block"><a href="https://exmail.qq.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=exmail.qq.com" alt="favicon">腾讯企业邮</a></div>
+            <div class="link-block"><a href="https://mail.google.com/" target="_blank" rel="noopener noreferrer"><img src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico" alt="favicon">Gmail</a></div>
+            <div class="link-block"><a href="https://outlook.live.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=outlook.live.com" alt="favicon">Outlook</a></div>
+            <div class="link-block"><a href="https://email.163.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=email.163.com" alt="favicon">网易邮箱</a></div>
+        </div>
+    </div>
+    <div class="grid-item">
+        <h2>常用工具</h2>
+        <div class="link-container">
+            <div class="link-block"><a href="http://192.168.200.254/" target="_blank" rel="noopener noreferrer"><img src="https://raw.githubusercontent.com/1iuzh/myico/refs/heads/main/icon_%E8%B7%AF%E7%94%B1%E5%99%A8.svg" alt="favicon">OpenWrt</a></div>
+            <div class="link-block"><a href="https://www.remove.bg/zh" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=www.remove.bg" alt="favicon">在线抠图</a></div>
+            <div class="link-block"><a href="https://www.logosc.cn/favicon-generator" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=www.logosc.cn" alt="favicon">Favicon生成</a></div>
+            <div class="link-block"><a href="https://1password.com/zh-cn/password-generator" target="_blank" rel="noopener noreferrer"><img src="https://1password.com/favicon.ico" alt="favicon">密码生成器</a></div>
+            <div class="link-block"><a href="https://tool.lu/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=tool.lu" alt="favicon">在线工具</a></div>
+            <div class="link-block"><a href="https://ip.chinaz.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=ip.chinaz.com" alt="favicon">chinaz-ip</a></div>
+            <div class="link-block"><a href="https://tool.chinaz.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=tool.chinaz.com" alt="favicon">站长工具</a></div>
+            <div class="link-block"><a href="https://www.iconfont.cn/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=iconfont.cn" alt="favicon">阿里素材</a></div>
+            <div class="link-block"><a href="https://www.100font.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=100font.com" alt="favicon">100font</a></div>
+        </div>
+    </div>
+
+    <!-- 第三行 -->
+    <div class="grid-item">
+        <h2>字典</h2>
+        <div class="link-container">
+            <div class="link-block"><a href="https://www.youdao.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=www.youdao.com" alt="favicon">有道词典</a></div>
+            <div class="link-block"><a href="https://qxk.bnu.edu.cn/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=qxk.bnu.edu.cn" alt="favicon">北师大字典</a></div>
+            <div class="link-block"><a href="https://zi.tools/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=zi.tools" alt="favicon">字统网</a></div>
+            <div class="link-block"><a href="https://zidian.odict.net/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=zidian.odict.net" alt="favicon">澳典</a></div>
+            <div class="link-block"><a href="https://www.zdic.net/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=www.zdic.net" alt="favicon">汉典</a></div>
+            <div class="link-block"><a href="https://dict.revised.moe.edu.tw/index.jsp" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=dict.revised.moe.edu.tw" alt="favicon">湾湾教育(部)</a></div>
+        </div>
+    </div>
+    <div class="grid-item">
+        <h2>境外势力</h2>
+        <div class="link-container">
+            <div class="link-block"><a href="https://github.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=github.com" alt="favicon">GitHub</a></div>
+            <div class="link-block"><a href="https://x.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=x.com" alt="favicon">X</a></div>
+            <div class="link-block"><a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=www.facebook.com" alt="favicon">Facebook</a></div>
+            <div class="link-block"><a href="https://www.xlinkworld.cc/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=www.xlinkworld.cc" alt="favicon">梯子</a></div>
+            <div class="link-block"><a href="https://www.twitch.tv/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=www.twitch.tv" alt="favicon">Twitch</a></div>
+            <div class="link-block"><a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=www.youtube.com" alt="favicon">Youtube</a></div>
+        </div>
+    </div>
+    <div class="grid-item">
+        <h2>回头再整理</h2>
+        <div class="link-container">
+            <div class="link-block"><a href="https://sspai.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.google.com/s2/favicons?domain=sspai.com" alt="favicon">少数派</a></div>
+            <div class="link-block"><a href="https://www.dgtle.com/" target="_blank" rel="noopener noreferrer"><img src="https://www.dgtle.com/favicon.ico" alt="favicon">数字尾巴</a></div>
+        </div>
+    </div>
+</div>
+
+<!-- 引入 Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
